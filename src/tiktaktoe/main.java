@@ -1,19 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
 package tiktaktoe;
 
-/**
- *
- * @author neong
- */
-import java.util.Scanner;
+import java.util.InputMismatchException;
 import java.util.Random;
+import java.util.Scanner;
 
 public class main {
 
-    
     private static char[][] board = {
             {' ', ' ', ' '},
             {' ', ' ', ' '},
@@ -52,7 +44,7 @@ public class main {
     private static void showBoard() {
         System.out.println("  0   1   2");
         for (int i = 0; i < 3; i++) {
-            System.out.print(i+" ");
+            System.out.print(i + " ");
             for (int j = 0; j < 3; j++) {
                 System.out.print(board[i][j]);
                 if (j < 2) {
@@ -71,10 +63,20 @@ public class main {
         Scanner scanner = new Scanner(System.in);
         int row, col;
         do {
-            System.out.println("Your turn, player " + player + ". Enter the row (0-2) and column (0-2) separated by a space:");
-            row = scanner.nextInt();
-            col = scanner.nextInt();
-        } while (!isValidMove(row, col));
+            try {
+                System.out.println("Your turn, player " + player + ". Enter the row (0-2) and column (0-2) separated by a space:");
+                row = scanner.nextInt();
+                col = scanner.nextInt();
+                if (!isValidMove(row, col)) {
+                    System.out.println("Invalid move. Try again.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter numbers only.");
+                scanner.nextLine(); // Consume the invalid input
+                row = -1;
+                col = -1;
+            }
+        } while (row < 0 || row >= 3 || col < 0 || col >= 3 || !isValidMove(row, col));
         board[row][col] = player;
     }
 
@@ -121,4 +123,3 @@ public class main {
         return true;
     }
 }
-
