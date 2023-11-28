@@ -13,6 +13,7 @@ import java.util.Random;
 
 public class main {
 
+    
     private static char[][] board = {
             {' ', ' ', ' '},
             {' ', ' ', ' '},
@@ -23,10 +24,10 @@ public class main {
     private static char ai = 'O';
 
     public static void main(String[] args) {
-        displayBoard();
+        showBoard();
         while (true) {
             playerTurn();
-            displayBoard();
+            showBoard();
             if (isWinner(player)) {
                 System.out.println("Congratulations! You won!");
                 break;
@@ -35,8 +36,8 @@ public class main {
                 System.out.println("It's a tie!");
                 break;
             }
-            aiTurn();
-            displayBoard();
+            enemyTurn();
+            showBoard();
             if (isWinner(ai)) {
                 System.out.println("The AI won! Try again.");
                 break;
@@ -48,8 +49,10 @@ public class main {
         }
     }
 
-    private static void displayBoard() {
+    private static void showBoard() {
+        System.out.println("  0   1   2");
         for (int i = 0; i < 3; i++) {
+            System.out.print(i+" ");
             for (int j = 0; j < 3; j++) {
                 System.out.print(board[i][j]);
                 if (j < 2) {
@@ -58,7 +61,7 @@ public class main {
             }
             System.out.println();
             if (i < 2) {
-                System.out.println("---------");
+                System.out.println("  ---------");
             }
         }
         System.out.println();
@@ -75,7 +78,7 @@ public class main {
         board[row][col] = player;
     }
 
-    private static void aiTurn() {
+    private static void enemyTurn() {
         Random rand = new Random();
         int row, col;
         do {
