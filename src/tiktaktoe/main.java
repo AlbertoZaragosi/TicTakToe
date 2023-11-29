@@ -67,7 +67,7 @@ public class main {
                 System.out.println("Your turn, player " + player + ". Enter the row (0-2) and column (0-2) separated by a space:");
                 row = scanner.nextInt();
                 col = scanner.nextInt();
-                if (!isValidMove(row, col)) {
+                if (!isValidMove(row, col,"")) {
                     System.out.println("Invalid move. Try again.");
                 }
             } catch (InputMismatchException e) {
@@ -76,7 +76,7 @@ public class main {
                 row = -1;
                 col = -1;
             }
-        } while (row < 0 || row >= 3 || col < 0 || col >= 3 || !isValidMove(row, col));
+        } while (row < 0 || row >= 3 || col < 0 || col >= 3 || !isValidMove(row, col,""));
         board[row][col] = player;
     }
 
@@ -86,14 +86,16 @@ public class main {
         do {
             row = rand.nextInt(3);
             col = rand.nextInt(3);
-        } while (!isValidMove(row, col));
+        } while (!isValidMove(row, col,"enemy"));
         System.out.println("The AI played in row " + row + " and column " + col);
         board[row][col] = ai;
     }
 
-    private static boolean isValidMove(int row, int col) {
+    private static boolean isValidMove(int row, int col, String name) {
         if (row < 0 || row >= 3 || col < 0 || col >= 3 || board[row][col] != ' ') {
-            System.out.println("Invalid move. Try again.");
+            if (!name.equalsIgnoreCase("enemy")) {//this way if the IA starts doing invalid moves it wont be shown.
+                System.out.println("Invalid move. Try again.");
+            }
             return false;
         }
         return true;
